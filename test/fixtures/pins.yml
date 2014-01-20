@@ -1,0 +1,30 @@
+# == Schema Information
+#
+# Table name: pins
+#
+#  id          :integer          not null, primary key
+#  description :text
+#  name        :string(255)      not null
+#  hidden      :integer          default(0)
+#  link        :string(255)
+#  image_url   :string(255)      not null
+#  board_id    :integer          not null
+#  created_at  :datetime
+#  updated_at  :datetime
+#
+
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  description: MyText
+  name: MyString
+  hidden: 1
+  link: MyString
+  image_url: MyString
+
+two:
+  description: MyText
+  name: MyString
+  hidden: 1
+  link: MyString
+  image_url: MyString

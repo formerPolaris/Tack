@@ -1,0 +1,27 @@
+# == Schema Information
+#
+# Table name: boards
+#
+#  id                :integer          not null, primary key
+#  description       :text
+#  privacy_attribute :integer          default(0), not null
+#  name              :string(255)      not null
+#  image_url         :string(255)      not null
+#  user_id           :integer          not null
+#  created_at        :datetime
+#  updated_at        :datetime
+#
+
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  description: MyText
+  privacy_attribute: 1
+  name: MyString
+  image_url: MyString
+
+two:
+  description: MyText
+  privacy_attribute: 1
+  name: MyString
+  image_url: MyString
