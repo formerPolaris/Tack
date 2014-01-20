@@ -7,9 +7,9 @@ class SessionsController < ApplicationController
     @user = User.find_by_credentials(params[:user])
     if(@user)
       log_in(@user)
-      render :json => @user
+      render :json => current_user
     else
-      render :json => {:errors => "Could not log in with those credentials."}
+      render :json => {:errors => "Could not log in with those credentials."}, status: :forbidden
     end
   end
 
@@ -20,7 +20,7 @@ class SessionsController < ApplicationController
 
   def check
     if logged_in?
-      render :json => session[:session_token], :status => 200
+      render :json => current_user
     else
       render :json => {:errors => "User not logged in"}, :status => 401
     end

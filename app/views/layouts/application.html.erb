@@ -5,7 +5,7 @@
   <%= stylesheet_link_tag    "application", media: "all", "data-turbolinks-track" => true %>
   <%= javascript_include_tag "application", "data-turbolinks-track" => true %>
   <%= csrf_meta_tags %>
-  <script>PinterestClone.currentUser = <%= current_user || '' %>;</script>
+  <script>PinterestClone.currentUser = <%= current_user.to_json(:only => [:id, :email, :name]).html_safe || '' %>;</script>
 </head>
   <body>
       <div class="navbar navbar-default navbar-fixed-top" role="navigation">
@@ -30,7 +30,7 @@
 
             <span id="logged-in-buttons" class="visibleWhenLoggedIn">
             </span>
-            
+
           </ul>
 
           <div id="backbone-auth" class="visibleWhenLoggedOut">

@@ -4,27 +4,29 @@ window.PinterestClone = {
   Views: {},
   Routers: {},
   initialize: function() {
-    var router = new PinterestClone.Routers.Router();
+    this.router = new PinterestClone.Routers.Router();
+		var that = this;
     $('.internal-link').click(function (event) {
       event.preventDefault();
-      router.navigate(event.currentTarget.hash, {trigger: true});
+      that.router.navigate(event.currentTarget.hash, {trigger: true});
     });
     var $content = $("#content");
     var $navbar = $(".navbar#global");
-    this.handleAuth(router);
+    this.handleAuth();
     Backbone.history.start();
   },
 
-  handleAuth: function(router) {
-    console.log("Firing handleauth")
+  handleAuth: function() {
+    console.log("Firing handleauth");
+		var that = this;
     $.ajax({
       url:"/session/check",
       type:"GET",
       success: function () {
-        router.loggedIn();
+        that.router.loggedIn();
       },
       error: function (data) {
-        router.loggedOut();
+        that.router.loggedOut();
       }
     });
   }

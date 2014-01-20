@@ -24,26 +24,26 @@ class User < ActiveRecord::Base
 
   before_validation :create_session_token # Ensures not nil
 
-  validates :name, 
+  validates :name,
     :uniqueness => true,
     :length => {:minimum => 1, :maximum => 24},
     :allow_blank => true
-    
+
   validates :email,
-    :uniqueness => true, 
-    :length => {:minimum => 7}, 
+    :uniqueness => true,
+    :length => {:minimum => 7},
     :presence => true
 
   validates :email,
     :format => { :with => /\A([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})\Z/i},
     :on => :create
 
-  validates :password, 
-    :presence => true, 
+  validates :password,
+    :presence => true,
     :if => :password_being_created_or_updated?
 
-  validates :password, 
-    :length => { :minimum => 6 }, 
+  validates :password,
+    :length => { :minimum => 6 },
     :if => :password_being_created_or_updated?
 
   validates :password_hash,
@@ -91,9 +91,9 @@ class User < ActiveRecord::Base
     #self.site_permissions
   end
 
-  def self.find_by_credentials(args = {:email => nil, :password => nil})
-    user = User.find_by_name(args[:email])
-    nil
-    return user if user && user.correct_password?(args[:password])
+  def self.find_by_credentials(creds)
+    user = User.find_by_email(creds[:email])
+    return nil unless user
+    return user if user.password_correct?(creds[:password])
   end
 end
