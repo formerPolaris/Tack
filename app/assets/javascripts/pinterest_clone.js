@@ -7,9 +7,7 @@ window.PinterestClone = {
     var router = new PinterestClone.Routers.Router();
     $('.internal-link').click(function (event) {
       event.preventDefault();
-      console.log(event.currentTarget.hash)
-      console.log(router)
-      router.navigate(event.currentTarget.hash);
+      router.navigate(event.currentTarget.hash, {trigger: true});
     });
     var $content = $("#content");
     var $navbar = $(".navbar#global");

@@ -6,7 +6,7 @@ PinterestClone.Routers.Router = Backbone.Router.extend({
     "": "home"
   },
 
-  loggedIn: function () { 
+  loggedIn: function () {
   // Populates logged-in-only buttons and removes login bar
     // if(!this.loggedInView) {
       this.loggedOutView && this.loggedOutView.remove();
