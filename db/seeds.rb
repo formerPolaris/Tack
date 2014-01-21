@@ -19,17 +19,26 @@
 #  updated_at        :datetime
 #
 
-includedNames = [];
+includedNames = []
+includedSizes = []
 
 500.times do |n|
   lorem = Board.new()
-  lorem.description = Faker::Lorem.paragraph(6);
-  lorem.name = Faker::Lorem.word;
+  lorem.description = Faker::Lorem.paragraph(6)
+  lorem.name = Faker::Lorem.word
   while includedNames.include?(lorem.name)
-    lorem.name = Faker::Lorem.word;
+    lorem.name = Faker::Lorem.word
   end
   includedNames << lorem.name
-  lorem.image_url = "http://lorempixel.com/400/200"
+  lorem.image_url = "http://lorempixel.com/200/"
+  randomSize = 100 + rand(300)
+  while includedSizes.include?(randomSize)
+    randomSize = 100 + rand(300)
+  end
+  includedSizes << randomSize
+
+  lorem.image_url.concat(randomSize.to_s)
+  puts lorem.image_url
   lorem.user_id = 1
   lorem.save!
 end

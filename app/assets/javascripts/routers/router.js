@@ -1,33 +1,36 @@
 PinterestClone.Routers.Router = Backbone.Router.extend({
   routes: {
+    "": "home",
     "users/index": "usersIndex",
     "boards/index": "boardsIndex",
-    "sessions/create": "sendCreds",
-    "": "home"
+    "sessions/create": "sendCreds"
+  },
+
+  initialize: function ($rootEl) {
+    this.$root = $rootEl;
   },
 
   loggedIn: function () {
   // Populates logged-in-only buttons and removes login bar
-    // if(!this.loggedInView) {
       this.loggedOutView && this.loggedOutView.remove();
-      this.loggedInView = new PinterestClone.Views.LoggedInView();
-      $(".visibleWhenLoggedIn").append(this.loggedInView.render().$el);
-    // }
+      this.loggedInButtonsView = new PinterestClone.Views.LoggedInButtonsView();
+      this.loggedInDashboardView = new PinterestClone.Views.LoggedInDashboardView();
+      $("#link-list").append(this.loggedInButtonsView.render());
+      $("#backbone-auth").append(this.loggedInDashboardView.render());
   },
 
   loggedOut: function () {
   // Depopulates logged-in-only buttons and restores login bar
-    // if(!this.loggedOutView) {
-      this.loggedInView && this.loggedInView.remove();
+      this.loggedInButtonsView && this.loggedInButtonsView.remove();
+      this.loggedInDashboardView && this.loggedInDashboardView.remove();
       this.loggedOutView = new PinterestClone.Views.LoggedOutView();
-      $(".visibleWhenLoggedOut").append(this.loggedOutView.render().$el);
-    // }
+      $("#backbone-auth").append(this.loggedOutView.render().$el);
   },
 
   home: function () {
     var that = this;
     var homeView = new PinterestClone.Views.HomeView();
-    that._swapView(homeView, $("#content"));
+    that._swapView(homeView, that.$root);
   },
 
   usersIndex: function () {
@@ -40,7 +43,7 @@ PinterestClone.Routers.Router = Backbone.Router.extend({
           collection: users
         });
 
-        that._swapView(usersIndexView, $("#content"));
+        that._swapView(usersIndexView, that.$root);
       },
 
       error: function (data) {
@@ -64,7 +67,7 @@ PinterestClone.Routers.Router = Backbone.Router.extend({
           // users: users
         });
 
-        that._swapView(boardsIndexView, $("#content"));
+        that._swapView(boardsIndexView, that.$root);
       },
 
       error: function (data) {
@@ -77,12 +80,8 @@ PinterestClone.Routers.Router = Backbone.Router.extend({
   },
 
   _swapView: function (view, $selectedElement) {
-    console.log("Swapping a view!");
-    console.log(this._currentView)
     this._currentView && this._currentView.remove();
     this._currentView = view;
-    console.log(this._currentView)
     $selectedElement.html(view.render().$el);
-    console.log(this._currentView)
   }
 });

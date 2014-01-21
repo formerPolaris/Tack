@@ -1,4 +1,5 @@
 PinterestClone.Views.LoggedOutView = Backbone.View.extend ({
+  tagName: "form",
   events: {
     "click .submitCredentials": "sendCreds"
   },
@@ -6,7 +7,9 @@ PinterestClone.Views.LoggedOutView = Backbone.View.extend ({
   template: JST["auth/logged_out"],
 
   render: function () {
-    this.$el.append(this.template);
+    this.$el.addClass("navbar-form navbar-right");
+    this.$el.attr('role', 'form');
+    this.$el.html(this.template());
     return this;
   },
 

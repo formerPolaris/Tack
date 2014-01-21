@@ -6,7 +6,7 @@ PinterestClone.Views.UsersIndex = Backbone.View.extend({
       users: this.collection
     });
     
-    this.$el.append(renderedContent);
+    this.$el.html(renderedContent);
 
     return this;
   }

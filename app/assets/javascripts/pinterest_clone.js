@@ -4,14 +4,14 @@ window.PinterestClone = {
   Views: {},
   Routers: {},
   initialize: function() {
-    this.router = new PinterestClone.Routers.Router();
+    var $content = $("#content")
+    this.router = new PinterestClone.Routers.Router($content);
 		var that = this;
-    $('.internal-link').click(function (event) {
-      event.preventDefault();
-      that.router.navigate(event.currentTarget.hash, {trigger: true});
-    });
-    var $content = $("#content");
-    var $navbar = $(".navbar#global");
+    // $('.internal-link').click(function (event) {
+    //   event.preventDefault();
+    //   that.router.navigate(event.target.hash, {trigger: true});
+    // });
+
     this.handleAuth();
     Backbone.history.start();
   },

@@ -1,10 +1,6 @@
-<div class="row">
-  <% boards.each(function (board) { %>
-    <div class="col-xs-6 col-md-4 col-lg-2 pin-or-board-space draggable">
-      <img src="<%= board.escape("image_url") %>"></img>
-      <p class="text-center"><%= board.escape("name") %></p>
-    </div>
-  <% }); %>
-</div>
-
-<% $(".pin-or-board-space").css({"margin":10 + "px", "padding":10 + "px"}) %>
+<% boards.each(function (board) { %>
+  <div class="panel">
+    <img src="<%= board.escape("image_url") %>" class="img-thumbnail img-responsive"></img>
+    <p class="text-center"><%= board.escape("name") %></p>
+  </div>
+<% }); %>

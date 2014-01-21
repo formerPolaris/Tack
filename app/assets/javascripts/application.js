@@ -23,3 +23,6 @@
 //= require_tree ./routers
 //= require_tree .
 //= require bootstrap
+//= require isotope.pkgd
+//= require imagesloaded
+//= require centeredmasonry
