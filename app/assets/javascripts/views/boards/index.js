@@ -3,10 +3,12 @@ PinterestClone.Views.BoardsIndex = Backbone.View.extend({
   className: 'panel-box',
 
   render: function () {
+    PinterestClone.resetActives();
+    $('#boards-link').addClass("active");
+
     var that = this;
     var renderedContent = this.template({
-      boards: this.collection,
-      users: this.users
+      boards: this.collection
     });
 
     this.$el.html(renderedContent);
@@ -14,8 +16,9 @@ PinterestClone.Views.BoardsIndex = Backbone.View.extend({
     this.$el.imagesLoaded(function () {
       that.$el.isotope({
         // options
+        columnWidth: 200,
         itemSelector: '.panel',
-        layoutMode: 'masonry'
+        layoutMode: 'perfectMasonry',
       });
     });
     return this;

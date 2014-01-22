@@ -2,8 +2,7 @@ PinterestClone.Routers.Router = Backbone.Router.extend({
   routes: {
     "": "home",
     "users/index": "usersIndex",
-    "boards/index": "boardsIndex",
-    "sessions/create": "sendCreds"
+    "boards/index": "boardsIndex"
   },
 
   initialize: function ($rootEl) {
@@ -12,19 +11,25 @@ PinterestClone.Routers.Router = Backbone.Router.extend({
 
   loggedIn: function () {
   // Populates logged-in-only buttons and removes login bar
-      this.loggedOutView && this.loggedOutView.remove();
+      this.clearLogViews();
       this.loggedInButtonsView = new PinterestClone.Views.LoggedInButtonsView();
       this.loggedInDashboardView = new PinterestClone.Views.LoggedInDashboardView();
-      $("#link-list").append(this.loggedInButtonsView.render());
+      $("#auth-only-link-list").append(this.loggedInButtonsView.render());
       $("#backbone-auth").append(this.loggedInDashboardView.render());
   },
 
   loggedOut: function () {
   // Depopulates logged-in-only buttons and restores login bar
+      PinterestClone.currentUser = undefined;
+      this.clearLogViews();
+      this.loggedOutView = new PinterestClone.Views.LoggedOutView();
+      $("#backbone-auth").html(this.loggedOutView.render().$el);
+  },
+
+  clearLogViews: function () {
+      this.loggedOutView && this.loggedOutView.remove();
       this.loggedInButtonsView && this.loggedInButtonsView.remove();
       this.loggedInDashboardView && this.loggedInDashboardView.remove();
-      this.loggedOutView = new PinterestClone.Views.LoggedOutView();
-      $("#backbone-auth").append(this.loggedOutView.render().$el);
   },
 
   home: function () {
@@ -55,25 +60,18 @@ PinterestClone.Routers.Router = Backbone.Router.extend({
   },
 
   boardsIndex: function () {
-    console.log("I'm in the boards!")
     var that = this;
     var boards = new PinterestClone.Collections.Boards();
-    // var users = new PinterestClone.Collections.Users();
     boards.fetch({
       success: function () {
-        // users.fetch();
         var boardsIndexView = new PinterestClone.Views.BoardsIndex({
-          collection: boards,
-          // users: users
+          collection: boards
         });
 
         that._swapView(boardsIndexView, that.$root);
-      },
-
-      error: function (data) {
-        console.log("Hi");
-        console.log(data);
-
+      }, 
+      error: function () {
+        console.log("Initial fetches failed.").
         that.previous();
       }
     })

@@ -96,4 +96,11 @@ class User < ActiveRecord::Base
     return nil unless user
     return user if user.password_correct?(creds[:password])
   end
+
+  def as_json(opts = {})
+    defaults = {
+      only: [:email, :name, :description]
+    }
+    super(defaults.merge(opts))
+  end
 end

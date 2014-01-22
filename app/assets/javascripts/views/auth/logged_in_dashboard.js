@@ -1,6 +1,26 @@
 PinterestClone.Views.LoggedInDashboardView = Backbone.View.extend ({
+  tagName: "li",
   template: JST["auth/logged_in_dashboard"],
+  events: {
+    "click .sign-out-link": "logOut"
+  },
+  
   render: function () {
-    return this.template();
+    this.$el.addClass("dropdown");
+    return this.$el.append(this.template);
+  },
+
+  logOut: function(event) {
+    event.preventDefault();
+    $.ajax({
+      url: "/session",
+      type: "DELETE",
+      success: function () {
+        PinterestClone.handleAuth();
+      },
+      error: function (error) {
+        console.log(error)
+      }
+    })
   }
 });

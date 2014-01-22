@@ -7,20 +7,20 @@ class SessionsController < ApplicationController
     @user = User.find_by_credentials(params[:user])
     if(@user)
       log_in(@user)
-      render :json => current_user
+      render :json => current_user.to_json(:only => [:id, :email, :name]).html_safe
     else
-      render :json => {:errors => "Could not log in with those credentials."}, status: :forbidden
+      render :json => {:errors => "Invalid username or password :/"}, :status => :unauthorized
     end
   end
 
   def destroy
     log_out
-    render :json => {"message-alerts" => "You have logged out successfully."}
+    render :json => {"message-alerts" => "See you later!"}
   end
 
-  def check
+  def show
     if logged_in?
-      render :json => current_user
+      render :json => current_user.to_json(:only => [:id, :email, :name]).html_safe
     else
       render :json => {:errors => "User not logged in"}, :status => 401
     end

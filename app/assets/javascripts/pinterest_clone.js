@@ -7,25 +7,25 @@ window.PinterestClone = {
     var $content = $("#content")
     this.router = new PinterestClone.Routers.Router($content);
 		var that = this;
-    // $('.internal-link').click(function (event) {
-    //   event.preventDefault();
-    //   that.router.navigate(event.target.hash, {trigger: true});
-    // });
-
     this.handleAuth();
     Backbone.history.start();
   },
 
+  resetActives: function() {
+    $(".active").removeClass();
+  },
+  
   handleAuth: function() {
-    console.log("Firing handleauth");
 		var that = this;
     $.ajax({
-      url:"/session/check",
+      url:"/session/show",
       type:"GET",
-      success: function () {
+      success: function (responseUser) {
+        PinterestClone.currentUser = responseUser;
         that.router.loggedIn();
       },
       error: function (data) {
+        console.log("Coming through!")
         that.router.loggedOut();
       }
     });

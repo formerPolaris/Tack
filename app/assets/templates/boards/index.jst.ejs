@@ -1,6 +1,8 @@
+<script src="vendor/assets/javascripts/jquery.isotope.perfectmasonry.js"></script>
 <% boards.each(function (board) { %>
   <div class="panel">
-    <img src="<%= board.escape("image_url") %>" class="img-thumbnail img-responsive"></img>
+    <img src="<%= board.escape("image_url") %>" class="img-responsive"></img>
     <p class="text-center"><%= board.escape("name") %></p>
+    <p class="author-note"><%= board.get('user').escape('name') || board.get('user').escape('email') %></p>
   </div>
 <% }); %>

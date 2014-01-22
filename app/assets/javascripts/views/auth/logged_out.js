@@ -1,7 +1,7 @@
 PinterestClone.Views.LoggedOutView = Backbone.View.extend ({
   tagName: "form",
   events: {
-    "click .submitCredentials": "sendCreds"
+    "click .submit-credentials": "sendCreds"
   },
 
   template: JST["auth/logged_out"],
@@ -26,12 +26,10 @@ PinterestClone.Views.LoggedOutView = Backbone.View.extend ({
 						password: password
           }
       },
-      success: function () {
-				console.log("successful login");
+      success: function (response) {
         PinterestClone.handleAuth();
       },
       error: function (err) {
-        console.log(err.responseJSON)
       }
     });
   }
